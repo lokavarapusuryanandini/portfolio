@@ -43,9 +43,10 @@ nav{position:sticky;top:0;z-index:50;background:rgba(11,17,32,.82);backdrop-filt
 .nav-links a:hover,.nav-links a:focus-visible{color:var(--text)}
 .nav-links a.active{color:var(--amber)}
 a:focus-visible,button:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:2px}
-@media(max-width:640px){
-  .nav-links{gap:16px;font-size:12px}
-  .logo{font-size:12.5px}
+@media(max-width:680px){
+  .nav-links{gap:14px;font-size:11.5px;overflow-x:auto;white-space:nowrap;scrollbar-width:none;-ms-overflow-style:none}
+  .nav-links::-webkit-scrollbar{display:none}
+  .logo{font-size:12px}
 }
 
 /* ---------- hero ---------- */
@@ -135,6 +136,48 @@ h2{font-family:var(--display);font-weight:700;font-stretch:108%;font-size:clamp(
 .ship-card h3{font-family:var(--display);font-stretch:106%;font-weight:650;font-size:17.5px;margin-bottom:8px}
 .ship-card p{font-size:14px;color:var(--muted)}
 
+/* engineering highlights */
+.cs{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-bottom:14px;overflow:hidden;transition:border-color .25s}
+.cs[open]{border-color:rgba(255,178,36,.35)}
+.cs summary{list-style:none;cursor:pointer;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.cs summary::-webkit-details-marker{display:none}
+.cs summary:hover{background:var(--surface-2)}
+.cs summary:focus-visible{outline:2px solid var(--amber);outline-offset:-2px}
+.cs-title h3{font-family:var(--display);font-stretch:106%;font-weight:650;font-size:18px;margin-bottom:2px}
+.cs-title .one-liner{font-size:13px;color:var(--muted)}
+.cs-marker{font-family:var(--mono);font-size:20px;color:var(--amber);flex-shrink:0;transition:transform .25s}
+.cs[open] .cs-marker{transform:rotate(45deg)}
+.cs-body{padding:4px 24px 24px;border-top:1px solid var(--line)}
+.cs-row{margin-top:16px}
+.cs-row .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:4px}
+.cs-row p{font-size:14.5px;color:var(--muted);line-height:1.62}
+.cs-row strong{color:var(--text);font-weight:500}
+.cs-note{font-size:12.5px;color:var(--muted);font-style:italic;margin-top:18px;padding-top:14px;border-top:1px dashed var(--line)}
+.mini-flow{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin-top:8px;font-family:var(--mono)}
+.mf-node{border:1px solid var(--line);background:var(--surface-2);border-radius:7px;padding:6px 12px;font-size:11.5px;color:var(--text);white-space:nowrap}
+.mf-arrow{color:var(--amber);font-size:12px}
+
+details.ship-card summary{cursor:pointer;list-style:none;position:relative;padding-right:26px}
+details.ship-card summary::-webkit-details-marker{display:none}
+.ship-mark{position:absolute;top:0;right:0;font-family:var(--mono);font-size:18px;color:var(--amber);transition:transform .25s}
+details.ship-card[open] .ship-mark{transform:rotate(45deg)}
+details.ship-card[open]{border-color:rgba(255,178,36,.45)}
+.ship-body{margin-top:16px;padding-top:4px;border-top:1px dashed var(--line)}
+.ship-body .cs-row p{font-size:13.5px}
+
+/* architecture flows */
+.flows{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;max-width:760px}
+.flow-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px 20px}
+.flow-card h3{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);text-align:center;margin-bottom:20px}
+.vflow{display:flex;flex-direction:column;align-items:center}
+.vnode{border:1px solid var(--line);background:var(--surface-2);border-radius:8px;padding:8px 18px;font-family:var(--mono);font-size:12.5px;color:var(--text);text-align:center;min-width:180px;transition:border-color .2s,color .2s}
+.vnode:hover{border-color:var(--amber);color:var(--amber)}
+.vnode small{display:block;font-size:10px;color:var(--muted);margin-top:2px}
+.varrow{color:var(--amber);font-size:13px;line-height:1;padding:6px 0;font-family:var(--mono)}
+
+/* production story */
+.story-panel{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--amber);border-radius:14px;padding:12px 28px 28px;max-width:820px}
+
 /* skills */
 .skill-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
 .sg{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px}
@@ -171,6 +214,8 @@ footer a{color:var(--amber)}
       <a href="#about" data-nav="about">About</a>
       <a href="#experience" data-nav="experience">Experience</a>
       <a href="#shipped" data-nav="shipped">Work</a>
+      <a href="#architecture" data-nav="architecture">Architecture</a>
+      <a href="#story" data-nav="story">Story</a>
       <a href="#skills" data-nav="skills">Skills</a>
       <a href="#contact" data-nav="contact">Contact</a>
     </div>
@@ -248,16 +293,13 @@ footer a{color:var(--amber)}
         <div class="co">Inflolabs Private Limited <span>(Revidd)</span> · Jun 2023 – Present</div>
         <ul>
           <li><strong>Cut p95 API response times by ~30%</strong> with Redis caching, DataLoader batching, pagination, and MongoDB query and index optimization.</li>
-          <li>Design and maintain <strong>REST and GraphQL services</strong> powering subscriptions, payments, and content delivery across a high-volume OTT API surface.</li>
-          <li>Scaled Node.js across CPU cores with a <strong>cluster-based multi-process architecture</strong>, raising throughput and resilience under concurrent load — with per-process Prometheus metrics aggregated for full observability.</li>
-          <li>Built <strong>asynchronous, event-driven workflows on RabbitMQ</strong>, decoupling services and improving fault tolerance across the distributed system.</li>
-          <li>Shipped secure <strong>authentication and subscription lifecycle systems</strong> — TVOD, bundles, multi-item purchases — built on JWT, OAuth, and role-based access control.</li>
-          <li>Integrated <strong>Stripe, PayPal, and Razorpay</strong> gateways plus <strong>in-app purchases for Android, iOS, and Roku</strong> into high-availability payment workflows, with Karix SMS/OTP for verification and transactional messaging.</li>
-          <li>Built end-to-end features across <strong>user management, subscriptions, coupon systems, and content workflows</strong>, collaborating with frontend, QA, and DevOps teams from design through production release.</li>
-          <li>Resolved production incidents end to end — <strong>debugging, root cause analysis, and permanent fixes</strong> that measurably improved system stability and reliability.</li>
-          <li>Automated content ingestion and business processes with <strong>Cron jobs and Cloudflare Workers</strong>; built AWS S3 signed-URL pipelines for secure media uploads.</li>
-          <li>Own the delivery pipeline end to end: <strong>Docker containers, GitLab CI/CD, and Kubernetes deployments via Rancher</strong>.</li>
-          <li><strong>Mentor interns and junior developers</strong>, lead code reviews, and partner with frontend, mobile, and QA teams to ship production-ready features.</li>
+          <li>Built and maintain <strong>10+ Node.js/TypeScript microservices</strong> and the REST &amp; GraphQL APIs powering subscriptions, payments, and content delivery for thousands of daily users.</li>
+          <li>Delivered <strong>end-to-end features</strong> across user management, subscription lifecycles (TVOD, bundles, multi-item purchases), coupon systems, and content workflows.</li>
+          <li>Integrated <strong>Stripe, PayPal, and Razorpay</strong> plus <strong>in-app purchases for Android, iOS, and Roku</strong> — each with its own webhooks, edge cases, and reconciliation logic.</li>
+          <li>Scaled Node.js across CPU cores with a <strong>cluster-based architecture</strong>, with per-process Prometheus metrics aggregated for full observability in Grafana.</li>
+          <li>Designed <strong>asynchronous, event-driven workflows on RabbitMQ</strong>, decoupling services and improving fault tolerance across the distributed system.</li>
+          <li>Resolved production incidents end to end — <strong>debugging, root cause analysis, and permanent fixes</strong> that measurably improved system stability.</li>
+          <li><strong>Mentor interns and junior developers</strong>, lead code reviews, and ship through Docker, GitLab CI/CD, and Kubernetes (Rancher) alongside the DevOps team.</li>
         </ul>
       </div>
       <div class="job">
@@ -265,9 +307,8 @@ footer a{color:var(--amber)}
         <div class="co">Inflolabs Private Limited <span>(Revidd)</span> · Jun 2022 – May 2023</div>
         <ul>
           <li>Developed backend modules for a production-grade OTT platform using Node.js, TypeScript, GraphQL, and MongoDB.</li>
-          <li>Contributed to authentication, authorization, subscription management, and content delivery workflows.</li>
-          <li>Improved performance with Redis caching, indexing strategies, and efficient database access patterns.</li>
-          <li>Debugged issues across development, staging, and production, and worked in Agile sprints alongside frontend and QA.</li>
+          <li>Contributed to authentication, subscription management, and content delivery workflows, and improved performance through Redis caching and indexing strategies.</li>
+          <li>Debugged issues across development, staging, and production while working in Agile sprints with frontend and QA teams.</li>
         </ul>
       </div>
     </div>
@@ -278,13 +319,110 @@ footer a{color:var(--amber)}
   <div class="wrap reveal">
     <div class="eyebrow">end-to-end features</div>
     <h2>What I've shipped</h2>
+    <p style="color:var(--muted);max-width:660px;margin-bottom:32px;font-size:16px">Six areas I've owned end to end. Click any card to expand it into a short engineering case study.</p>
     <div class="ship">
-      <div class="ship-card"><div class="tagline">identity</div><h3>User Management</h3><p>Registration, authentication, and profile systems with JWT, OAuth, and role-based access control — the front door for every user on the platform.</p></div>
-      <div class="ship-card"><div class="tagline">revenue</div><h3>Subscription Management</h3><p>Full subscription lifecycles — plans, TVOD, bundles, multi-item purchases, renewals, and cancellations — built to never lose a paying customer to a bug.</p></div>
-      <div class="ship-card"><div class="tagline">payments</div><h3>Payment Integrations</h3><p>Stripe, PayPal, and Razorpay gateways plus in-app purchases on Android, iOS, and Roku — each with its own webhooks, edge cases, and reconciliation logic.</p></div>
-      <div class="ship-card"><div class="tagline">growth</div><h3>Coupon &amp; Promotion Systems</h3><p>Discount engines with validation rules, redemption limits, and expiry handling, wired safely into the checkout and subscription flows.</p></div>
-      <div class="ship-card"><div class="tagline">ecosystem</div><h3>Third-party Integrations</h3><p>Karix SMS/OTP, AWS S3 signed-URL uploads, Cloudflare Workers, and external content services — connected reliably behind clean internal APIs.</p></div>
-      <div class="ship-card"><div class="tagline">reliability</div><h3>Production Firefighting</h3><p>Debugging live incidents, running root cause analysis, and shipping permanent fixes — turning 2 AM alerts into long-term stability improvements.</p></div>
+      <details class="ship-card"><summary><div class="tagline">identity</div><h3>User Management</h3><p>Registration, authentication, and permissions — the front door for every user on the platform.</p><span class="ship-mark">+</span></summary>
+        <div class="ship-body">
+          <div class="cs-row"><span class="k">problem</span><p>Every storefront needs secure sign-up, login, and permissions that behave consistently across web, mobile, and TV apps.</p></div>
+          <div class="cs-row"><span class="k">responsibility</span><p>Owned the authentication and authorization services end to end.</p></div>
+          <div class="cs-row"><span class="k">technical decisions</span><p><strong>JWT</strong> for stateless sessions that scale horizontally, <strong>OAuth</strong> for third-party login, <strong>RBAC</strong> to cleanly separate user, admin, and operator capabilities, and <strong>Karix SMS/OTP</strong> for verification.</p></div>
+          <div class="cs-row"><span class="k">outcome</span><p>One auth layer that every service trusts — and a permission model that new features plug into instead of reinventing.</p></div>
+        </div>
+      </details>
+      <details class="ship-card"><summary><div class="tagline">revenue</div><h3>Subscription Management</h3><p>Full lifecycles — plans, TVOD, bundles, renewals, cancellations — built to never lose a paying customer to a bug.</p><span class="ship-mark">+</span></summary>
+        <div class="ship-body">
+          <div class="cs-row"><span class="k">problem</span><p>A subscription is a state machine — purchase, renewal, upgrade, cancellation — and its state lives in two places: the payment provider and our database. Missed events mean drift: lost revenue or wrongly blocked users.</p></div>
+          <div class="cs-row"><span class="k">responsibility</span><p>Built and maintained the subscription lifecycle services, including TVOD, bundles, and multi-item purchases.</p></div>
+          <div class="cs-row"><span class="k">technical decisions</span><p>Made <strong>verified payment events the source of truth</strong> — subscription state changes only in response to events the provider confirmed, flowing through RabbitMQ consumers so the sync survives service restarts.</p></div>
+          <div class="cs-row"><span class="k">outcome</span><p>Renewals, upgrades, and cancellations reflect what the provider actually recorded — drift stopped being a class of bug.</p></div>
+        </div>
+      </details>
+      <details class="ship-card"><summary><div class="tagline">payments</div><h3>Payment Integrations</h3><p>Stripe, PayPal, Razorpay, plus in-app purchases on Android, iOS, and Roku — each with its own webhooks and edge cases.</p><span class="ship-mark">+</span></summary>
+        <div class="ship-body">
+          <div class="cs-row"><span class="k">problem</span><p>Six payment paths, each with different APIs, webhook formats, retry behavior, and sandbox quirks. This is money — correctness beats speed, always.</p></div>
+          <div class="cs-row"><span class="k">responsibility</span><p>Owned the gateway integrations and high-availability payment workflows.</p></div>
+          <div class="cs-row"><span class="k">technical decisions</span><p>Normalized every provider behind a <strong>common payment layer</strong> so downstream logic never knows which gateway ran. <strong>Verified every webhook</strong> and made duplicate or out-of-order deliveries safe to process. Verified <strong>IAP receipts server-side</strong> against store APIs — never trusting the client.</p></div>
+          <div class="cs-row"><span class="k">outcome</span><p>Reliable checkout across 6+ payment paths. The rule I build by: <strong>assume every webhook arrives twice</strong>, and make that boring.</p></div>
+        </div>
+      </details>
+      <details class="ship-card"><summary><div class="tagline">growth</div><h3>Coupon &amp; Promotion Systems</h3><p>Discount engines with validation rules, redemption limits, and expiry handling, wired into checkout.</p><span class="ship-mark">+</span></summary>
+        <div class="ship-body">
+          <div class="cs-row"><span class="k">problem</span><p>Marketing needs to run promotions freely — but a validation gap in a discount system leaks revenue silently, one redemption at a time.</p></div>
+          <div class="cs-row"><span class="k">responsibility</span><p>Built the coupon validation engine and its integration with checkout and subscription pricing.</p></div>
+          <div class="cs-row"><span class="k">technical decisions</span><p>Centralized <strong>rule evaluation at redemption time</strong> — eligibility, usage limits, expiry — validated before payment is captured, so an invalid coupon can never produce a valid charge.</p></div>
+          <div class="cs-row"><span class="k">outcome</span><p>Promotions run without engineering supervision, and double redemptions stopped being possible rather than merely unlikely.</p></div>
+        </div>
+      </details>
+      <details class="ship-card"><summary><div class="tagline">ecosystem</div><h3>Third-party Integrations</h3><p>Karix SMS/OTP, AWS S3 uploads, Cloudflare Workers, and external content services behind clean internal APIs.</p><span class="ship-mark">+</span></summary>
+        <div class="ship-body">
+          <div class="cs-row"><span class="k">problem</span><p>The platform depends on external vendors — messaging, storage, edge compute — each with its own failure modes and rate limits. Coupling business logic directly to vendors makes every outage theirs <em>and</em> ours.</p></div>
+          <div class="cs-row"><span class="k">responsibility</span><p>Integrated and maintained the third-party service layer.</p></div>
+          <div class="cs-row"><span class="k">technical decisions</span><p>Wrapped each vendor behind a <strong>clean internal API</strong>. For media, used <strong>S3 signed URLs</strong> so large uploads go client-to-S3 directly — authorized by us, but never passing through our API servers. Ran scheduled automation on <strong>Cron jobs and Cloudflare Workers</strong>.</p></div>
+          <div class="cs-row"><span class="k">outcome</span><p>Uploads scale with S3 instead of our servers, and vendor failures stay contained behind one boundary.</p></div>
+        </div>
+      </details>
+      <details class="ship-card"><summary><div class="tagline">reliability</div><h3>Production Firefighting</h3><p>Debugging live incidents, root cause analysis, and permanent fixes — turning 2 AM alerts into stability.</p><span class="ship-mark">+</span></summary>
+        <div class="ship-body">
+          <div class="cs-row"><span class="k">problem</span><p>Incidents arrive as error spikes, customer reports, or a metric drifting the wrong way. Restart-and-hope makes them recur; untraced symptoms always come back.</p></div>
+          <div class="cs-row"><span class="k">responsibility</span><p>Own incidents end to end — from detection through prevention.</p></div>
+          <div class="cs-row"><span class="k">technical decisions</span><p>Trace with <strong>logs, Prometheus metrics, and Grafana</strong>; establish the timeline; keep asking why until the cause is <strong>structural, not situational</strong>. Stabilize first if users are affected, then ship the permanent fix.</p></div>
+          <div class="cs-row"><span class="k">outcome</span><p>Each incident ends with a new alert, validation, or runbook — so the whole class of problem becomes impossible or immediately visible. See the Production Story below for a full example.</p></div>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section id="architecture">
+  <div class="wrap reveal">
+    <div class="eyebrow">architecture</div>
+    <h2>Two flows I've built, simplified</h2>
+    <p style="color:var(--muted);max-width:660px;margin-bottom:32px;font-size:16px">Generic views of two core systems — every box is a component I've built, extended, or debugged in production.</p>
+    <div class="flows">
+      <div class="flow-card">
+        <h3>Subscription &amp; Payment Flow</h3>
+        <div class="vflow">
+          <div class="vnode">user<small>checkout</small></div>
+          <div class="varrow">&darr;</div>
+          <div class="vnode">payment gateway<small>Stripe &middot; PayPal &middot; Razorpay &middot; IAP</small></div>
+          <div class="varrow">&darr; webhook</div>
+          <div class="vnode">payment service<small>verify &middot; dedupe</small></div>
+          <div class="varrow">&darr; publish</div>
+          <div class="vnode">rabbitmq<small>payment events</small></div>
+          <div class="varrow">&darr; consume</div>
+          <div class="vnode">subscription service<small>lifecycle sync</small></div>
+          <div class="varrow">&darr;</div>
+          <div class="vnode">mongodb<small>entitlements</small></div>
+        </div>
+      </div>
+      <div class="flow-card">
+        <h3>Media Upload Flow</h3>
+        <div class="vflow">
+          <div class="vnode">client<small>content upload</small></div>
+          <div class="varrow">&darr; request</div>
+          <div class="vnode">signed-url api<small>auth &middot; validation</small></div>
+          <div class="varrow">&darr; signed URL</div>
+          <div class="vnode">aws s3<small>direct upload</small></div>
+          <div class="varrow">&darr; confirm</div>
+          <div class="vnode">content service<small>metadata &middot; processing</small></div>
+          <div class="varrow">&darr;</div>
+          <div class="vnode">mongodb<small>catalog record</small></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="story">
+  <div class="wrap reveal">
+    <div class="eyebrow">production story</div>
+    <h2>The investigation behind the 30%</h2>
+    <div class="story-panel">
+      <div class="cs-row"><span class="k">the symptom</span><p>As the content catalog and user base grew, our highest-traffic endpoints — home feed, content listings, playback metadata — were getting noticeably slower. No single change caused it; performance had eroded gradually, which is the hardest kind of problem to see.</p></div>
+      <div class="cs-row"><span class="k">the investigation</span><p>Instead of guessing, I profiled where the time actually went: slow-query analysis on MongoDB and a close look at what our GraphQL resolvers were doing per request. The data told a clear story — <strong>resolvers were triggering N+1 database lookups</strong> (one query per item in a list instead of one query for the list), several frequent query patterns had <strong>no supporting indexes</strong>, and data that rarely changed was being <strong>recomputed on every single request</strong>.</p></div>
+      <div class="cs-row"><span class="k">the fix, in deliberate order</span><p>First, <strong>DataLoader</strong> to batch and de-duplicate resolver lookups — collapsing N+1 patterns into single batched queries. Second, <strong>compound MongoDB indexes</strong> matched to the real query patterns, plus pagination on unbounded list endpoints. Only then, <strong>Redis caching</strong> with TTL-based invalidation for hot, slow-changing data. Every step shipped incrementally against live traffic and was measured before moving to the next.</p></div>
+      <div class="cs-row"><span class="k">the result</span><p>Roughly <strong>30% lower response times</strong> on the optimized endpoints and significantly reduced database load — visible immediately in our Prometheus metrics and Grafana dashboards.</p></div>
+      <div class="cs-row"><span class="k">what it taught me</span><p>The instinct is to reach for a cache first. The data said otherwise: <strong>batching and indexing fixed more than caching alone</strong>, and caching added last — with a clear invalidation strategy — is the difference between a faster system and a subtly incorrect one. Measure first. Always.</p></div>
     </div>
   </div>
 </section>
@@ -385,7 +523,7 @@ footer a{color:var(--amber)}
   }
 
   // Active nav highlighting
-  var sections = ['about','experience','shipped','skills','contact'];
+  var sections = ['about','experience','shipped','architecture','story','skills','contact'];
   var links = {};
   sections.forEach(function(id){
     var l = document.querySelector('[data-nav="' + id + '"]');

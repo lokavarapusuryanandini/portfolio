@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lokavarapu Surya Nandini — Software Engineer</title>
+<meta name="description" content="Backend engineer with 4 years of experience building scalable OTT streaming systems — Node.js, TypeScript, event-driven microservices, payments, and cloud-native infrastructure.">
+<meta property="og:title" content="Lokavarapu Surya Nandini — Software Engineer">
+<meta property="og:description" content="Backend systems that stream to thousands, without breaking a sweat. Node.js · TypeScript · Microservices · AWS.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0B1120;
+  --surface:#111A2E;
+  --surface-2:#16223A;
+  --line:#22304A;
+  --text:#E6EBF4;
+  --muted:#8A97AD;
+  --amber:#FFB224;
+  --amber-dim:rgba(255,178,36,.12);
+  --green:#3DDC97;
+  --mono:'JetBrains Mono',monospace;
+  --sans:'Inter',sans-serif;
+  --display:'Archivo',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+::selection{background:var(--amber);color:#0B1120}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+
+/* ---------- nav ---------- */
+nav{position:sticky;top:0;z-index:50;background:rgba(11,17,32,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px}
+.logo{font-family:var(--mono);font-size:14px;font-weight:600;letter-spacing:.02em;white-space:nowrap}
+.logo .dot{color:var(--amber)}
+.nav-links{display:flex;gap:26px;font-size:13.5px;color:var(--muted)}
+.nav-links a{transition:color .2s;padding:4px 0}
+.nav-links a:hover,.nav-links a:focus-visible{color:var(--text)}
+.nav-links a.active{color:var(--amber)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:2px}
+@media(max-width:640px){
+  .nav-links{gap:16px;font-size:12px}
+  .logo{font-size:12.5px}
+}
+
+/* ---------- hero ---------- */
+.hero{padding:92px 0 72px;position:relative}
+.hero::before{content:'';position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:820px;height:480px;background:radial-gradient(ellipse at center,rgba(255,178,36,.07),transparent 65%);pointer-events:none}
+.status{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12.5px;color:var(--green);background:rgba(61,220,151,.08);border:1px solid rgba(61,220,151,.25);border-radius:100px;padding:5px 14px;margin-bottom:26px}
+.status .pulse{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+h1{font-family:var(--display);font-weight:750;font-stretch:112%;font-size:clamp(36px,6.4vw,66px);line-height:1.05;letter-spacing:-.015em;margin-bottom:20px;max-width:820px}
+h1 .accent{color:var(--amber)}
+.hero-sub{max-width:640px;color:var(--muted);font-size:17.5px;margin-bottom:36px}
+.hero-sub strong{color:var(--text);font-weight:500}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;font-size:14.5px;font-weight:600;padding:12px 22px;border-radius:8px;transition:transform .15s,background .2s,border-color .2s}
+.btn-primary{background:var(--amber);color:#141414}
+.btn-primary:hover{transform:translateY(-2px);background:#ffc24d}
+.btn-ghost{border:1px solid var(--line);color:var(--text)}
+.btn-ghost:hover{border-color:var(--muted);transform:translateY(-2px)}
+
+/* ---------- request trace (signature) ---------- */
+.trace{margin-top:64px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:26px 28px 20px;font-family:var(--mono);position:relative}
+.trace-head{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-bottom:20px}
+.trace-head .lat{color:var(--green)}
+.trace-flow{display:flex;align-items:flex-start;overflow-x:auto;padding-bottom:8px;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.node{flex-shrink:0;text-align:center}
+.node-box{border:1px solid var(--line);background:var(--surface-2);border-radius:8px;padding:10px 16px;font-size:12.5px;color:var(--text);white-space:nowrap;transition:border-color .3s,box-shadow .3s,color .3s}
+.node-box.lit{border-color:var(--amber);box-shadow:0 0 0 3px var(--amber-dim);color:var(--amber)}
+.node-sub{font-size:10.5px;color:var(--muted);margin-top:7px;white-space:nowrap}
+.edge{flex-shrink:0;width:54px;height:2px;background:var(--line);position:relative;margin:19px 2px 0}
+.edge::after{content:'';position:absolute;left:0;top:-1.5px;width:10px;height:5px;border-radius:3px;background:var(--amber);opacity:0;animation:travel 4.5s linear infinite;animation-delay:var(--d,0s)}
+@keyframes travel{0%,100%{opacity:0;left:0}4%{opacity:1}16%{opacity:1;left:calc(100% - 10px)}20%{opacity:0;left:calc(100% - 10px)}}
+.trace-hint{display:none;font-size:10.5px;color:var(--muted);text-align:right;margin-top:6px}
+@media(max-width:720px){.trace-hint{display:block}}
+@media(prefers-reduced-motion:reduce){
+  .edge::after{animation:none;opacity:.8}
+  .status .pulse{animation:none}
+  html{scroll-behavior:auto}
+}
+
+/* ---------- sections ---------- */
+section{padding:80px 0;border-top:1px solid var(--line)}
+.eyebrow{font-family:var(--mono);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:14px}
+h2{font-family:var(--display);font-weight:700;font-stretch:108%;font-size:clamp(26px,3.6vw,36px);letter-spacing:-.01em;margin-bottom:34px}
+
+/* scroll reveal */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+/* metrics */
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px;margin-top:8px}
+.metric{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:24px 22px;transition:border-color .25s,transform .25s}
+.metric:hover{border-color:rgba(255,178,36,.45);transform:translateY(-3px)}
+.metric .num{font-family:var(--display);font-stretch:110%;font-weight:750;font-size:40px;color:var(--amber);line-height:1;margin-bottom:10px}
+.metric .lbl{font-size:13.5px;color:var(--muted)}
+
+/* about */
+.about-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:48px;align-items:start}
+.about-grid p{color:var(--muted);margin-bottom:16px;font-size:16.5px}
+.about-grid p strong{color:var(--text);font-weight:500}
+.edu{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:24px}
+.edu h3{font-size:13px;font-family:var(--mono);font-weight:600;color:var(--amber);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px}
+.edu p{font-size:14.5px;margin-bottom:4px;color:var(--text)}
+.edu .sub{color:var(--muted);font-size:13.5px;margin-bottom:14px}
+.edu .gpa{display:inline-block;font-family:var(--mono);font-size:12.5px;color:var(--green);background:rgba(61,220,151,.08);border:1px solid rgba(61,220,151,.25);border-radius:6px;padding:3px 10px}
+@media(max-width:780px){.about-grid{grid-template-columns:1fr}}
+
+/* experience */
+.xp{position:relative;padding-left:34px}
+.xp::before{content:'';position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:var(--line)}
+.job{position:relative;padding-bottom:52px}
+.job:last-child{padding-bottom:0}
+.job::before{content:'';position:absolute;left:-32px;top:7px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:3px solid var(--amber)}
+.job h3{font-family:var(--display);font-stretch:106%;font-weight:650;font-size:21px;margin-bottom:4px}
+.job .co{font-size:14px;color:var(--muted);font-family:var(--mono);margin-bottom:18px}
+.job .co span{color:var(--amber)}
+.job ul{list-style:none;display:grid;gap:11px}
+.job li{position:relative;padding-left:22px;color:var(--muted);font-size:15.5px}
+.job li::before{content:'▸';position:absolute;left:0;color:var(--amber);font-size:13px;top:2px}
+.job li strong{color:var(--text);font-weight:500}
+
+/* shipped features */
+.ship{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.ship-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px;transition:border-color .25s,transform .25s}
+.ship-card:hover{border-color:rgba(255,178,36,.45);transform:translateY(-3px)}
+.ship-card .tagline{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-bottom:10px}
+.ship-card h3{font-family:var(--display);font-stretch:106%;font-weight:650;font-size:17.5px;margin-bottom:8px}
+.ship-card p{font-size:14px;color:var(--muted)}
+
+/* skills */
+.skill-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.sg{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px}
+.sg h3{font-family:var(--mono);font-size:12.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-bottom:16px}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{font-family:var(--mono);font-size:12.5px;color:var(--text);background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:5px 11px;transition:border-color .2s,color .2s}
+.tag:hover{border-color:var(--amber);color:var(--amber)}
+
+/* certs */
+.certs{display:grid;gap:12px}
+.cert{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 20px;font-size:15px;transition:border-color .2s}
+.cert:hover{border-color:rgba(61,220,151,.4)}
+.cert .ck{color:var(--green);font-family:var(--mono);font-weight:600}
+
+/* contact */
+.contact{text-align:center;padding:96px 0}
+.contact .eyebrow{text-align:center}
+.contact h2{margin-bottom:18px}
+.contact p{color:var(--muted);max-width:520px;margin:0 auto 34px;font-size:17px}
+.contact-links{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:8px}
+.phone{font-family:var(--mono);font-size:15px;color:var(--amber);display:inline-block;margin-top:28px;border-bottom:1px dashed rgba(255,178,36,.4);padding-bottom:2px}
+.phone:hover{border-bottom-style:solid}
+
+footer{border-top:1px solid var(--line);padding:26px 0;text-align:center;font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+footer a{color:var(--amber)}
+</style>
+</head>
+<body>
+
+<nav aria-label="Main">
+  <div class="wrap nav-in">
+    <a class="logo" href="#top">lokavarapu<span class="dot">.</span>surya.nandini</a>
+    <div class="nav-links">
+      <a href="#about" data-nav="about">About</a>
+      <a href="#experience" data-nav="experience">Experience</a>
+      <a href="#shipped" data-nav="shipped">Work</a>
+      <a href="#skills" data-nav="skills">Skills</a>
+      <a href="#contact" data-nav="contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero wrap" id="top">
+  <div class="status"><span class="pulse" aria-hidden="true"></span>open to backend engineering roles</div>
+  <h1>Backend systems that stream to <span class="accent">thousands</span> — without breaking a sweat.</h1>
+  <p class="hero-sub">I'm <strong>Lokavarapu Surya Nandini</strong>, a software engineer with <strong>4 years of experience</strong> building the backbone of OTT streaming platforms: <strong>Node.js and TypeScript microservices, event-driven pipelines, payment systems, and cloud-native infrastructure</strong> that stay fast under real-world traffic.</p>
+  <div class="hero-cta">
+    <a class="btn btn-primary" href="#contact">Get in touch</a>
+    <a class="btn btn-ghost" href="https://github.com/lokavarapusuryanandini" target="_blank" rel="noopener">GitHub ↗</a>
+    <a class="btn btn-ghost" href="https://linkedin.com/in/lokavarapu-surya-nandini" target="_blank" rel="noopener">LinkedIn ↗</a>
+  </div>
+
+  <div class="trace" aria-label="Illustration of a request flowing through backend services I build">
+    <div class="trace-head"><span>trace: GET /v1/playback — p95</span><span class="lat">▼ 30% latency after optimization</span></div>
+    <div class="trace-flow">
+      <div class="node"><div class="node-box" id="n0">client</div><div class="node-sub">app / web</div></div>
+      <div class="edge" style="--d:0s"></div>
+      <div class="node"><div class="node-box" id="n1">api-gateway</div><div class="node-sub">JWT · RBAC</div></div>
+      <div class="edge" style="--d:.75s"></div>
+      <div class="node"><div class="node-box" id="n2">graphql</div><div class="node-sub">DataLoader · batching</div></div>
+      <div class="edge" style="--d:1.5s"></div>
+      <div class="node"><div class="node-box" id="n3">redis</div><div class="node-sub">cache hit</div></div>
+      <div class="edge" style="--d:2.25s"></div>
+      <div class="node"><div class="node-box" id="n4">mongodb</div><div class="node-sub">indexed query</div></div>
+      <div class="edge" style="--d:3s"></div>
+      <div class="node"><div class="node-box" id="n5">rabbitmq</div><div class="node-sub">async events</div></div>
+    </div>
+    <div class="trace-hint">swipe to follow the request →</div>
+  </div>
+</header>
+
+<section id="impact">
+  <div class="wrap reveal">
+    <div class="eyebrow">measured impact</div>
+    <h2>Numbers I stand behind</h2>
+    <div class="metrics">
+      <div class="metric"><div class="num" data-count="30" data-suffix="%">30%</div><div class="lbl">faster API responses through Redis caching, DataLoader batching, and MongoDB query optimization</div></div>
+      <div class="metric"><div class="num" data-count="10" data-suffix="+">10+</div><div class="lbl">production microservices built and maintained in Node.js &amp; TypeScript</div></div>
+      <div class="metric"><div class="num" data-count="6" data-suffix="+">6+</div><div class="lbl">payment integrations — Stripe, PayPal, Razorpay, plus in-app purchases on Android, iOS &amp; Roku</div></div>
+      <div class="metric"><div class="num" data-count="4" data-suffix="">4</div><div class="lbl">years shipping end-to-end features and resolving production incidents at Revidd</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap about-grid reveal">
+    <div>
+      <div class="eyebrow">about</div>
+      <h2>Reliable by design</h2>
+      <p>I build the systems behind streaming platforms — the APIs, subscription lifecycles, payment flows, and background pipelines that have to work every single time someone presses play.</p>
+      <p>Three things shape how I work: <strong>event-driven architecture</strong> (RabbitMQ workflows that keep services decoupled and fault-tolerant), <strong>observability</strong> (Prometheus metrics aggregated across clustered Node.js processes, visualized in Grafana — because you can't fix what you can't see), and <strong>performance engineering</strong> — caching, batching, and indexing applied where they actually move the numbers.</p>
+      <p>What I enjoy most is the intersection of building and firefighting: shipping a feature end to end, then when something breaks in production, tracing it to the root cause and fixing it <strong>permanently</strong> — not patching around it. Beyond code, I mentor interns and junior developers, lead code reviews, and collaborate closely with frontend, QA, and DevOps teams through every release.</p>
+    </div>
+    <div class="edu">
+      <h3>Education</h3>
+      <p>B.Tech, Computer Science &amp; Engineering</p>
+      <p class="sub">GMR Institute of Technology (JNTU Vizianagaram) · 2019 – 2023</p>
+      <span class="gpa">CGPA 9.25 / 10</span>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap reveal">
+    <div class="eyebrow">experience</div>
+    <h2>Where I've built</h2>
+    <div class="xp">
+      <div class="job">
+        <h3>Software Engineer</h3>
+        <div class="co">Inflolabs Private Limited <span>(Revidd)</span> · Jun 2023 – Present</div>
+        <ul>
+          <li><strong>Cut p95 API response times by ~30%</strong> with Redis caching, DataLoader batching, pagination, and MongoDB query and index optimization.</li>
+          <li>Design and maintain <strong>REST and GraphQL services</strong> powering subscriptions, payments, and content delivery across a high-volume OTT API surface.</li>
+          <li>Scaled Node.js across CPU cores with a <strong>cluster-based multi-process architecture</strong>, raising throughput and resilience under concurrent load — with per-process Prometheus metrics aggregated for full observability.</li>
+          <li>Built <strong>asynchronous, event-driven workflows on RabbitMQ</strong>, decoupling services and improving fault tolerance across the distributed system.</li>
+          <li>Shipped secure <strong>authentication and subscription lifecycle systems</strong> — TVOD, bundles, multi-item purchases — built on JWT, OAuth, and role-based access control.</li>
+          <li>Integrated <strong>Stripe, PayPal, and Razorpay</strong> gateways plus <strong>in-app purchases for Android, iOS, and Roku</strong> into high-availability payment workflows, with Karix SMS/OTP for verification and transactional messaging.</li>
+          <li>Built end-to-end features across <strong>user management, subscriptions, coupon systems, and content workflows</strong>, collaborating with frontend, QA, and DevOps teams from design through production release.</li>
+          <li>Resolved production incidents end to end — <strong>debugging, root cause analysis, and permanent fixes</strong> that measurably improved system stability and reliability.</li>
+          <li>Automated content ingestion and business processes with <strong>Cron jobs and Cloudflare Workers</strong>; built AWS S3 signed-URL pipelines for secure media uploads.</li>
+          <li>Own the delivery pipeline end to end: <strong>Docker containers, GitLab CI/CD, and Kubernetes deployments via Rancher</strong>.</li>
+          <li><strong>Mentor interns and junior developers</strong>, lead code reviews, and partner with frontend, mobile, and QA teams to ship production-ready features.</li>
+        </ul>
+      </div>
+      <div class="job">
+        <h3>Software Engineer Trainee</h3>
+        <div class="co">Inflolabs Private Limited <span>(Revidd)</span> · Jun 2022 – May 2023</div>
+        <ul>
+          <li>Developed backend modules for a production-grade OTT platform using Node.js, TypeScript, GraphQL, and MongoDB.</li>
+          <li>Contributed to authentication, authorization, subscription management, and content delivery workflows.</li>
+          <li>Improved performance with Redis caching, indexing strategies, and efficient database access patterns.</li>
+          <li>Debugged issues across development, staging, and production, and worked in Agile sprints alongside frontend and QA.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="shipped">
+  <div class="wrap reveal">
+    <div class="eyebrow">end-to-end features</div>
+    <h2>What I've shipped</h2>
+    <div class="ship">
+      <div class="ship-card"><div class="tagline">identity</div><h3>User Management</h3><p>Registration, authentication, and profile systems with JWT, OAuth, and role-based access control — the front door for every user on the platform.</p></div>
+      <div class="ship-card"><div class="tagline">revenue</div><h3>Subscription Management</h3><p>Full subscription lifecycles — plans, TVOD, bundles, multi-item purchases, renewals, and cancellations — built to never lose a paying customer to a bug.</p></div>
+      <div class="ship-card"><div class="tagline">payments</div><h3>Payment Integrations</h3><p>Stripe, PayPal, and Razorpay gateways plus in-app purchases on Android, iOS, and Roku — each with its own webhooks, edge cases, and reconciliation logic.</p></div>
+      <div class="ship-card"><div class="tagline">growth</div><h3>Coupon &amp; Promotion Systems</h3><p>Discount engines with validation rules, redemption limits, and expiry handling, wired safely into the checkout and subscription flows.</p></div>
+      <div class="ship-card"><div class="tagline">ecosystem</div><h3>Third-party Integrations</h3><p>Karix SMS/OTP, AWS S3 signed-URL uploads, Cloudflare Workers, and external content services — connected reliably behind clean internal APIs.</p></div>
+      <div class="ship-card"><div class="tagline">reliability</div><h3>Production Firefighting</h3><p>Debugging live incidents, running root cause analysis, and shipping permanent fixes — turning 2 AM alerts into long-term stability improvements.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap reveal">
+    <div class="eyebrow">stack</div>
+    <h2>Tools I reach for</h2>
+    <div class="skill-groups">
+      <div class="sg"><h3>Backend &amp; APIs</h3><div class="tags"><span class="tag">Node.js</span><span class="tag">TypeScript</span><span class="tag">Express.js</span><span class="tag">GraphQL</span><span class="tag">REST</span><span class="tag">DataLoader</span><span class="tag">Microservices</span><span class="tag">Cloudflare Workers</span></div></div>
+      <div class="sg"><h3>Data &amp; Messaging</h3><div class="tags"><span class="tag">MongoDB</span><span class="tag">MySQL</span><span class="tag">Redis</span><span class="tag">RabbitMQ</span><span class="tag">Indexing</span><span class="tag">Query Optimization</span></div></div>
+      <div class="sg"><h3>Cloud &amp; DevOps</h3><div class="tags"><span class="tag">AWS EC2 / S3</span><span class="tag">Docker</span><span class="tag">Kubernetes (Rancher)</span><span class="tag">GitLab CI/CD</span></div></div>
+      <div class="sg"><h3>Observability &amp; Security</h3><div class="tags"><span class="tag">Prometheus</span><span class="tag">Grafana</span><span class="tag">JWT</span><span class="tag">OAuth</span><span class="tag">RBAC</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="certs">
+  <div class="wrap reveal">
+    <div class="eyebrow">certifications</div>
+    <h2>Continued learning</h2>
+    <div class="certs">
+      <div class="cert"><span class="ck">✓</span>JavaScript — The Complete Guide (Beginner + Advanced)</div>
+      <div class="cert"><span class="ck">✓</span>Node.js, Express, MongoDB &amp; More: The Complete Bootcamp</div>
+      <div class="cert"><span class="ck">✓</span>Kubernetes for Developers</div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <div class="wrap reveal">
+    <div class="eyebrow">contact</div>
+    <h2>Let's build something reliable</h2>
+    <p>I'm looking for my next challenge: more complex backend systems, deeper system-design ownership, and room to grow at the intersection of backend engineering and DevOps. If that sounds like your team — my inbox is open.</p>
+    <div class="contact-links">
+      <a class="btn btn-primary" href="mailto:lokavarapusuryanandini@gmail.com">Email me</a>
+      <a class="btn btn-ghost" href="https://linkedin.com/in/lokavarapu-surya-nandini" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a class="btn btn-ghost" href="https://github.com/lokavarapusuryanandini" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+    <a class="phone" href="tel:+918688975141">+91 86889 75141</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">© 2026 Lokavarapu Surya Nandini · <a href="#top">back to top ↑</a></div>
+</footer>
+
+<script>
+(function(){
+  var reduced = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+  // Trace: light up nodes in sequence
+  if (!reduced) {
+    var nodes = ['n0','n1','n2','n3','n4','n5'].map(function(id){ return document.getElementById(id); });
+    var i = 0;
+    var step = function(){
+      nodes.forEach(function(n){ n.classList.remove('lit'); });
+      nodes[i].classList.add('lit');
+      i = (i + 1) % nodes.length;
+    };
+    step();
+    setInterval(step, 750);
+  }
+
+  // Scroll reveal
+  var reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && !reduced) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(function(el){ io.observe(el); });
+  } else {
+    reveals.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  // Count-up metrics
+  if (!reduced && 'IntersectionObserver' in window) {
+    var nums = document.querySelectorAll('.num[data-count]');
+    var cio = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (!e.isIntersecting) return;
+        cio.unobserve(e.target);
+        var el = e.target, target = parseInt(el.dataset.count, 10), suffix = el.dataset.suffix || '';
+        var start = null, dur = 900;
+        var tick = function(ts){
+          if (!start) start = ts;
+          var p = Math.min((ts - start) / dur, 1);
+          el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))) + suffix;
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      });
+    }, { threshold: 0.5 });
+    nums.forEach(function(el){ cio.observe(el); });
+  }
+
+  // Active nav highlighting
+  var sections = ['about','experience','shipped','skills','contact'];
+  var links = {};
+  sections.forEach(function(id){
+    var l = document.querySelector('[data-nav="' + id + '"]');
+    if (l) links[id] = l;
+  });
+  if ('IntersectionObserver' in window) {
+    var nio = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) {
+          Object.keys(links).forEach(function(k){ links[k].classList.remove('active'); });
+          if (links[e.target.id]) links[e.target.id].classList.add('active');
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    sections.forEach(function(id){
+      var s = document.getElementById(id);
+      if (s) nio.observe(s);
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
